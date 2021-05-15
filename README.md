@@ -35,11 +35,10 @@ const DualBloomPass = DualBloomPassGen({ THREE, Pass, FullScreenQuad });
 
 // Create DualBloomPass instance
 const myDualBloomPass = new DualBloomPass({
-  renderer, 
-  maxDuals: 5, // Max available blur radius, immutable after creation. ( >= 1 ) 
+  maxDuals: 8, // Max available blur radius, immutable after creation. ( >= 1 ) 
   blurriness: .5, // Ratio of `maxDuals`, mutable. ( 0. <= blurriness <= 1. ) 
   threshold: .5, // Bloom if luma > `threshold`. ( 0. <= threshold <= 1. )
-  intensity: .5 // Bloom intensity. ( >= 0. )
+  intensity: 2 // Bloom intensity. ( >= 0. )
 });
 
 // Add to EffectComposer 
@@ -48,7 +47,7 @@ fx.addPass(new RenderPass(scene, camera));
 fx.addPass(myDualBloomPass);
 
 // APIs
-myDualBloomPass.maxDuals; //-> 5 
+myDualBloomPass.maxDuals; //-> 8 
 myDualBloomPass.threshold = 0.; // =always pass 
 myDualBloomPass.blurriness = 1.; // =max blur 
 myDualBloomPass.intensity = 0.; // =no bloom 

@@ -45,7 +45,7 @@ export function DualBloomPassGen({ THREE, Pass, FullScreenQuad }) {
   }
 
   class BlurFx {
-    constructor(renderer, maxDuals) {
+    constructor(maxDuals) {
       this.rts = [];
       this.passes = [];
       this.maxDuals = maxDuals;
@@ -59,9 +59,6 @@ export function DualBloomPassGen({ THREE, Pass, FullScreenQuad }) {
         this.rts[i] = new THREE.WebGLRenderTarget(0, 0);
         this.rts[maxDuals + i] = new THREE.WebGLRenderTarget(0, 0);
       }
-
-      const { w, h } = renderer.getDrawingBufferSize(new THREE.Vector2());
-      this.setSize(w, h);
     }
 
     setSize(w, h) {
@@ -100,7 +97,6 @@ export function DualBloomPassGen({ THREE, Pass, FullScreenQuad }) {
   return class DualBloomPass extends Pass {
 
     constructor({
-      renderer,
       threshold = .5,
       blurriness = .5,
       intensity = .5,
@@ -117,7 +113,7 @@ export function DualBloomPassGen({ THREE, Pass, FullScreenQuad }) {
       }));
       this._lumaPass.material.uniforms['uThreshold'].value = threshold;
 
-      this._blurFx = new BlurFx(renderer, maxDuals);
+      this._blurFx = new BlurFx(maxDuals);
       this._blurriness = blurriness;
 
       this._combinePass = new FullScreenQuad(new THREE.ShaderMaterial({
