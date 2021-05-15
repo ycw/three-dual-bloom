@@ -72,14 +72,14 @@ export const UpsampleShader = {
     void main() {
       // half px
       gl_FragColor = ( 2. * (
-        texture( tDiffuse, vUv + uOffset.xy )
-        + texture( tDiffuse, vUv - uOffset.xy )
-        + texture( tDiffuse, vUv + vec2( uOffset.x, -uOffset.y ) )
-        + texture( tDiffuse, vUv + vec2( -uOffset.x, uOffset.y ) )
-      ) + texture( tDiffuse, vUv + vec2( uOffset.z, 0. ) )
-        + texture( tDiffuse, vUv + vec2( 0., uOffset.w ) )
-        + texture( tDiffuse, vUv + vec2( -uOffset.z, 0. ) )
-        + texture( tDiffuse, vUv + vec2( 0., -uOffset.w ) )
+        texture2D( tDiffuse, vUv + uOffset.xy )
+        + texture2D( tDiffuse, vUv - uOffset.xy )
+        + texture2D( tDiffuse, vUv + vec2( uOffset.x, -uOffset.y ) )
+        + texture2D( tDiffuse, vUv + vec2( -uOffset.x, uOffset.y ) )
+      ) + texture2D( tDiffuse, vUv + vec2( uOffset.z, 0. ) )
+        + texture2D( tDiffuse, vUv + vec2( 0., uOffset.w ) )
+        + texture2D( tDiffuse, vUv + vec2( -uOffset.z, 0. ) )
+        + texture2D( tDiffuse, vUv + vec2( 0., -uOffset.w ) )
       ) / 12.;
     }
   `
@@ -106,8 +106,8 @@ export const CombineShader = {
     uniform float uIntensity;
     varying vec2 vUv;
     void main() {
-      vec4 D = texture( tDiffuse, vUv );
-      vec4 B = texture( tBlurred, vUv );
+      vec4 D = texture2D( tDiffuse, vUv );
+      vec4 B = texture2D( tBlurred, vUv );
       gl_FragColor = D + uIntensity * B;
     }
   `
