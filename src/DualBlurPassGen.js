@@ -7,7 +7,7 @@ export function DualBlurPassGen({ THREE, Pass, FullScreenQuad }) {
       super();
 
       this.fsQuad = new FullScreenQuad(new THREE.ShaderMaterial({
-        uniforms:  THREE.UniformsUtils.clone(DownsampleShader.uniforms),
+        uniforms: THREE.UniformsUtils.clone(DownsampleShader.uniforms),
         vertexShader: DownsampleShader.vertexShader,
         fragmentShader: DownsampleShader.fragmentShader,
       }));
@@ -107,7 +107,7 @@ export function DualBlurPassGen({ THREE, Pass, FullScreenQuad }) {
         console.warn(`duals (${this._duals}) will be clamped (in 1..${this._maxDuals}) internally`);
         this._effectiveDuals = Math.max(1, Math.min(this._duals | 0, this._maxDuals));
       } else {
-        this._effectiveDuals = Math.round(this._duals | 0);
+        this._effectiveDuals = this._duals | 0;
       }
     }
 
