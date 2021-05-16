@@ -1,8 +1,8 @@
 # About
 
-Dual bloom pass for threejs postprocessing.
+Dual Bloom ( and Dual Blur ) pass for threejs postprocessing.
 
-[Live example](https://ycw.github.io/three-dual-bloom/example/)
+[Live examples](https://ycw.github.io/three-dual-bloom/example/)
 
 
 
@@ -22,23 +22,23 @@ via npm
 
 ## Usage
 
+Dual Bloom: ( [example](https://ycw.github.io/three-dual-bloom/example/dual-bloom/) )
+
 ```js
 import * as THREE from 'three'
 import { EffectComposer, Pass, FullScreenQuad } from 'three/examples/jsm/postprocessing/EffectComposer'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
 import { DualBloomPassGen } from 'three-dual-bloom'
 
-...
-
 // Generate DualBloomPass class
 const DualBloomPass = DualBloomPassGen({ THREE, Pass, FullScreenQuad }); 
 
 // Create DualBloomPass instance
 const myDualBloomPass = new DualBloomPass({
-  maxDuals: 8, // Max available blur radius, immutable after creation. ( >= 1 ) 
+  maxDuals: 8, // Max available blur size, immutable after creation. ( >= 1 ) 
   blurriness: .5, // Ratio of `maxDuals`, mutable. ( 0. <= blurriness <= 1. ) 
   threshold: .5, // Bloom if luma > `threshold`. ( 0. <= threshold <= 1. )
-  intensity: 2 // Bloom intensity. ( >= 0. )
+  intensity: 2. // Bloom intensity. ( >= 0. )
 });
 
 // Add to EffectComposer 
@@ -51,6 +51,24 @@ myDualBloomPass.maxDuals; //-> 8
 myDualBloomPass.threshold = 0.; // =always pass 
 myDualBloomPass.blurriness = 1.; // =max blur 
 myDualBloomPass.intensity = 0.; // =no bloom 
+```
+
+Dual Blur: ( [example](https://ycw.github.io/three-dual-bloom/example/dual-blur/) )
+
+```js
+...
+import { DualBlurPassGen } from 'three-dual-bloom'
+
+...
+const DualBlurPass = DualBlurPassGen({ THREE, Pass, FullScreenQuad });
+const myDualBlurPass = new DualBlurPass({ 
+  maxDuals: 8, // Max available blur size, immutable after creation. ( >= 1 ) 
+  duals: 4 // prop. to blurriness; ( >= 1 )
+});
+
+// APIs
+myDualBlurPass.maxDuals; //-> 8
+myDualBlurPAss.duals = 0; // warn ( will clamp in range 1..maxDuals internally )
 ```
 
 
