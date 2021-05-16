@@ -13,7 +13,7 @@ export function DualBloomPassGen({ THREE, Pass, FullScreenQuad }) {
       blurriness = .5,
       intensity = .5,
       maxDuals = 8,
-    }) {
+    } = {}) {
       super();
 
       this._lumaPass = new FullScreenQuad(new THREE.ShaderMaterial({
