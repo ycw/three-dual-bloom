@@ -29,13 +29,6 @@
       height: 100vh;
       cursor: grab;
     }
-
-    #tp {
-      position: fixed;
-      z-index: 2;
-      right: 1rem;
-      top: 1rem;
-    }
   </style>
   <script type="module" defer>
     import * as THREE from '//cdn.skypack.dev/three@0.128.0?min';
@@ -43,7 +36,7 @@
     import { EffectComposer, Pass, FullScreenQuad } from '//cdn.skypack.dev/three@0.128.0/examples/jsm/postprocessing/EffectComposer?min'
     import { RenderPass } from '//cdn.skypack.dev/three@0.128.0/examples/jsm/postprocessing/RenderPass?min'
     import { DualBlurPassGen } from '../../src/index.js'
-    import Tweakpane from '//cdn.skypack.dev/tweakpane';
+    import { Pane } from '//cdn.skypack.dev/tweakpane@3.0.0';
 
     // ---- params 
 
@@ -95,10 +88,10 @@
     fx.addPass(dualBlurPass);
 
     // ---- gui
-    const tweakpane = new Tweakpane({ title: 'Dual Blur', container: document.querySelector('#tp') });
-    tweakpane.addInput(params, 'duals', { min: 1, max: params.maxDuals, step: 1 });
-    tweakpane.addInput(params, 'maxDuals', { disabled: true, step: 1 });
-    tweakpane.on('change', () => {
+    const pane = new Pane({ title: 'Dual Blur' });
+    pane.addInput(params, 'duals', { min: 1, max: params.maxDuals, step: 1 });
+    pane.addInput(params, 'maxDuals', { disabled: true, step: 1 });
+    pane.on('change', () => {
       dualBlurPass.duals = params.duals;
     });
 
@@ -125,5 +118,4 @@
 
 <body>
   <h1>Dual Blur</h1>
-  <div id='tp'></div>
 </body>

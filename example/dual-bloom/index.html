@@ -21,7 +21,6 @@
 
     canvas {
       position: fixed;
-      z-index: 1;
       top: 0;
       left: 0;
       display: block;
@@ -30,12 +29,6 @@
       cursor: grab;
     }
 
-    #tp {
-      position: fixed;
-      z-index: 2;
-      right: 1rem;
-      top: 1rem;
-    }
   </style>
   <script type="module" defer>
     import * as THREE from '//cdn.skypack.dev/three@0.128.0?min';
@@ -43,7 +36,7 @@
     import { EffectComposer, Pass, FullScreenQuad } from '//cdn.skypack.dev/three@0.128.0/examples/jsm/postprocessing/EffectComposer?min'
     import { RenderPass } from '//cdn.skypack.dev/three@0.128.0/examples/jsm/postprocessing/RenderPass?min'
     import { DualBloomPassGen } from '../../src/index.js'
-    import Tweakpane from '//cdn.skypack.dev/tweakpane';
+    import { Pane } from '//cdn.skypack.dev/tweakpane@3.0.0';
 
     // ---- params 
 
@@ -98,11 +91,11 @@
     fx.addPass(dualBloomPass);
 
     // ---- gui
-    const tweakpane = new Tweakpane({ title: 'Dual Bloom', container: document.querySelector('#tp') });
-    tweakpane.addInput(params, 'threshold', { min: 0, max: 1 });
-    tweakpane.addInput(params, 'blurriness', { min: 0, max: 1 });
-    tweakpane.addInput(params, 'intensity', { min: 0, max: 4 });
-    tweakpane.on('change', () => {
+    const pane = new Pane({ title: 'Dual Bloom' });
+    pane.addInput(params, 'threshold', { min: 0, max: 1 });
+    pane.addInput(params, 'blurriness', { min: 0, max: 1 });
+    pane.addInput(params, 'intensity', { min: 0, max: 4 });
+    pane.on('change', () => {
       dualBloomPass.threshold = params.threshold;
       dualBloomPass.blurriness = params.blurriness;
       dualBloomPass.intensity = params.intensity;
@@ -131,5 +124,4 @@
 
 <body>
   <h1>Dual Bloom</h1>
-  <div id='tp'></div>
 </body>
