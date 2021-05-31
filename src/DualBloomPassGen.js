@@ -26,7 +26,7 @@ export function DualBloomPassGen({ THREE, Pass, FullScreenQuad }) {
 
       this._dualBlurPass = new DualBlurPass({ maxDuals });
       this._dualBlurRT = new THREE.WebGLRenderTarget(0, 0); 
-      this._blurriness = blurriness;
+      this.blurriness = blurriness; // which set `this._blurriness`
 
       this._combinePass = new FullScreenQuad(new THREE.ShaderMaterial({
         uniforms: THREE.UniformsUtils.clone(CombineShader.uniforms),
